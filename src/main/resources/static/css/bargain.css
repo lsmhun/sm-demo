@@ -1,0 +1,86 @@
+html,
+body,
+#editor {
+	margin: 0;
+	height: 100%;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	color: #333;
+}
+
+h1 {
+	color: #A50;
+	text-align: center;
+	font-weight: bold;
+	margin-right: 100px;
+}
+
+.header {
+	background-color: #FDA;
+	height: 100px;
+	margin: 0px;
+}
+
+.navbarSprite {
+	background-color: transparent;
+	background-attachment: scroll;
+	background-repeat: no-repeat;
+	height: 100px;
+}
+
+li {
+	cursor: pointer;
+}
+
+table {
+    background: #fff;
+    border-radius: 5px;
+    border-spacing: 0;
+}
+
+.facesIcon {
+	color: #f6f6f6;
+	font-size: 60px;
+	height: 50px;
+	text-align: right;
+}
+
+.title_bold {
+	font-weight: bold;
+}
+
+.nav_title {
+	font-size: 18px;
+}
+
+.bargain_logo {
+	float: left;
+	height: 32px;
+	weight: 32px;
+	background-size: 32px 32px;
+	background: white url(../images/favicon-32x32.png) no-repeat center;
+}
+
+.bargain_left {
+	border: 2px solid grey;
+	padding: 10px;
+	border-radius: 25px;
+	background-color: #FFA;
+	min-height: 350px
+}
+
+.bargain_right {
+	border: 2px solid grey;
+	padding: 10px;
+	border-radius: 25px;
+	background-color: #FCC;
+	min-height: 350px
+}
+
+.bargain_right a,
+.bargain_left a {
+	text-decoration: none;
+}
+
+.my-text-center {
+	text-align: center;
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <title>Bargain</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bargain.css" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="nav_title" href="../index.html">
+                <img src="../images/favicon-32x32.png" style="padding:7px;" />
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav_title" href="../index.html">Spring Boot - State Machine demo</a></li>
+            <li><a class="nav_title title_bold" href="#">BARGAIN</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container" id="app">
+    <div class="row">
+        <div class="col-sm-6 bargain_left" >
+            <div>
+                <div>Status: {{ currentStatus }}</div>
+                <div>Message: {{ message }}</div>
+            </div>
+            <p/>
+            <div id="offerForm">
+                <p>
+                    <label for="price">Price</label>
+                    <input
+                            id="price"
+                            v-model="price"
+                            name="price"
+                            @keypress="onlyForCurrency"
+                    >
+                </p>
+                <p>
+                    <button class="btn btn-danger " v-on:click="checkForm">Send offer</button>
+                </p>
+                <p v-if="errors.length">
+                    <b>Unable to send offer:</b>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-6 bargain_right" >
+            <div>
+                <div>"I've come to bargain."</div>
+                <div>- Doctor Strange</div>
+            </div>
+            <p/>
+            <div>
+                <img src="../images/ivecometobargain.png" width="100%"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    price: 100.0,
+                    message: "-",
+                    currentStatus: "",
+                    offers: [],
+                    errors: [],
+                    timer: ''
+                }
+            },
+            methods: {
+                 checkForm: function (e) {
+                      this.errors = [];
+
+                      if (!this.price) {
+                        this.errors.push('Price required.');
+                      }
+                      if(this.currentStatus != 'RUNNING'){
+                        this.errors.push('Market is closed');
+                      }
+                      if(this.errors.length === 0){
+                        this.sendOffer();
+                        this.message = "Offer sent with price: " + this.price;
+                      }
+                      e.preventDefault();
+                 },
+                 onlyForCurrency: function ($event) {
+                    // console.log($event.keyCode); //keyCodes value
+                    let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+
+                    // only allow number and one dot
+                    if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || this.price.indexOf('.') != -1)) { // 46 is dot
+                       $event.preventDefault();
+                    }
+
+                    // restrict to 2 decimal places
+                    if(this.price!=null && this.price.indexOf(".")>-1 && (this.price.split('.')[1].length > 1)){
+                       $event.preventDefault();
+                    }
+                },
+                sendOffer: function(){
+                    var url = window.location.origin;
+                    axios.post(url + '/api/v1/bargain/sendOffer', {
+                            price: this.price
+                        })
+                        .then(response => {
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.loading = false;
+                        });
+                },
+                getCurrentState: function() {
+                    var url = window.location.origin;
+                    axios.get(url + '/api/v1/status/currentState')
+                        .then(response => {
+                            this.currentStatus = response.data;
+                        })
+                        .catch(error => {
+                            this.message = "Error";
+                            console.log(error);
+                        });
+                }
+            },
+            created () {
+                this.getCurrentState();
+                this.timer = setInterval(this.getCurrentState, 5000);
+            },
+            beforeDestroy () {
+                clearInterval(this.timer);
+            }
+        })
+
+      </script>
+</body>
+</html>
