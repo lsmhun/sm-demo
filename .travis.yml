@@ -1,4 +1,5 @@
 language: java
+sudo: true
 jdk:
   - oraclejdk11
   - openjdk11
@@ -7,9 +8,8 @@ cache:
   directories:
     - $HOME/.m2
 
+before_install:
+  - chmod +x mvnw
+
 script:
   - ./mvnw clean install
-  - ./mvnw cobertura:cobertura
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
