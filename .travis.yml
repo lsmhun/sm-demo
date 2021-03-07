@@ -13,3 +13,7 @@ before_install:
 
 script:
   - ./mvnw clean install
+  - ./mvnw jacoco:report
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
