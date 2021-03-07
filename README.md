@@ -16,3 +16,6 @@ You need Java11 installed in advance. Then you can run it as a regular Spring Bo
 ```bash
 $ ./mvnw spring-boot:run
 ```
+
+[![Build Status](https://www.travis-ci.com/lsmhun/sm-demo.svg?branch=main)](https://www.travis-ci.com/lsmhun/sm-demo)
+[![codecov.io](https://codecov.io/github/lsmhun/sm-demo/coverage.svg?branch=main)](https://codecov.io/github/lsmhun/sm-demo?branch=main)
