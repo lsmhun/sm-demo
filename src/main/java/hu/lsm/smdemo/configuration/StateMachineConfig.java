@@ -28,11 +28,11 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<AppSta
 
     @Override
     public void configure(StateMachineConfigurationConfigurer<AppState, AppEvent> config) throws Exception {
-        StateMachineListenerAdapter<AppState, AppEvent> adapter = new StateMachineListenerAdapter<>(){
+        StateMachineListenerAdapter<AppState, AppEvent> adapter = new StateMachineListenerAdapter<>() {
             @Override
             public void stateChanged(State<AppState, AppEvent> from, State<AppState, AppEvent> to) {
                 super.stateChanged(from, to);
-                if(from == null || to == null) return;
+                if (from == null || to == null) return;
                 log.info("State changed: {} --> {} ", from.getId(), to.getId());
             }
         };

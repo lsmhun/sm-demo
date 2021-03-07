@@ -12,7 +12,8 @@ import java.time.ZoneId;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,44 +25,42 @@ class BargainServiceTest {
     private BargainService bargainService = new BargainService(stateMachineManager, bargainClock);
 
     @BeforeEach
-    private void init(){
+    private void init() {
         when(stateMachineManager.getCurrentState()).thenReturn(AppState.RUNNING);
         when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(123), ZoneId.of("UTC")));
     }
 
     @Test
-    public void testFlow(){
+    public void testFlow() {
         bargainService.collectOffer("user1", 1.2);
-        when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(123l), ZoneId.of("UTC")));
+        when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(123L), ZoneId.of("UTC")));
         bargainService.collectOffer("user1", 1.3);
-        var expected = Triple.of("user1", 123l, 1.3);
+        var expected = Triple.of("user1", 123L, 1.3);
         var result = bargainService.getCurrentLeader().get();
         assertEquals(expected, result);
     }
 
     @Test
-    public void testSamePrice(){
+    public void testSamePrice() {
         when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(1), ZoneId.of("UTC")));
         bargainService.collectOffer("user0", 1.1);
         when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(2), ZoneId.of("UTC")));
         bargainService.collectOffer("user1", 1.2);
         when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(3), ZoneId.of("UTC")));
         bargainService.collectOffer("user2", 1.2);
-        var expected = Triple.of("user1", 2l, 1.2);
+        var expected = Triple.of("user1", 2L, 1.2);
         var result = bargainService.getCurrentLeader().get();
         assertEquals(expected, result);
     }
 
     @Test
-    public void testMarketClosed(){
+    public void testMarketClosed() {
         when(stateMachineManager.getCurrentState()).thenReturn(AppState.WAITING);
-        assertThrows(MarketClosedException.class, () -> {
-            bargainService.collectOffer("user1", 1.2);
-        });
+        assertThrows(MarketClosedException.class, () -> bargainService.collectOffer("user1", 1.2));
     }
 
     @Test
-    public void testResults(){
+    public void testResults() {
         bargainService.collectOffer("user1", 1.2);
         when(bargainClock.getCurrentTime()).thenReturn(Clock.fixed(Instant.ofEpochMilli(212), ZoneId.of("UTC")));
         bargainService.collectOffer("user2", 1.3);

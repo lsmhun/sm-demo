@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,7 +56,6 @@ public class BargainService {
     private boolean isBargainActive() {
         return stateMachineManager.getCurrentState() != AppState.WAITING;
     }
-
 
 
 }

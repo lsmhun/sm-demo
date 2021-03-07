@@ -9,16 +9,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.statemachine.config.EnableStateMachine;
 
 @SpringBootApplication(exclude = {
-		SecurityAutoConfiguration.class,
-		ManagementWebSecurityAutoConfiguration.class
+        SecurityAutoConfiguration.class,
+        ManagementWebSecurityAutoConfiguration.class
 }, scanBasePackages = "hu.lsm.smdemo")
 @EnableAsync
 @EnableStateMachine
 @EnableScheduling
 public class SmDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SmDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SmDemoApplication.class, args);
+    }
 
 }

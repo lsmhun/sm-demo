@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SchedulingServiceTest {
@@ -41,7 +40,7 @@ class SchedulingServiceTest {
     @Test
     public void stopBargain() {
         when(stateMachineManager.getCurrentState()).thenReturn(AppState.RUNNING);
-        when(bargainService.getCurrentLeader()).thenReturn(Optional.of(Triple.of("user", 123l, 123.45)));
+        when(bargainService.getCurrentLeader()).thenReturn(Optional.of(Triple.of("user", 123L, 123.45)));
 
         schedulingService.stopBargain();
         verify(dealDao).save(any());

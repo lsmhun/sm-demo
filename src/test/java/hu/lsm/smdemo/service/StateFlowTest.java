@@ -22,7 +22,6 @@ import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -40,22 +39,22 @@ class StateFlowTest {
     @Autowired
     private StateMachineTestConfig.TestStateMachineListener stateMachineListener;
 
-    static{
+    static {
         Awaitility.setDefaultPollInterval(100, TimeUnit.MILLISECONDS);
-        Awaitility.setDefaultTimeout(Duration.ofSeconds(10l));
+        Awaitility.setDefaultTimeout(Duration.ofSeconds(10L));
     }
 
     @BeforeEach
-    public void init(){
+    public void init() {
         stateMachineListener.cleanup();
     }
 
     @Test
-    public void testCompletedFlow(){
+    public void testCompletedFlow() {
         stateMachineManager.sendEvent(AppEvent.START);
-        await().until(stateMachineManager::getCurrentState , equalTo(AppState.RUNNING));
+        await().until(stateMachineManager::getCurrentState, equalTo(AppState.RUNNING));
         stateMachineManager.sendEvent(AppEvent.COMPLETE);
-        await().until(stateMachineManager::getCurrentState , equalTo(AppState.WAITING));
+        await().until(stateMachineManager::getCurrentState, equalTo(AppState.WAITING));
         var expectedList = Arrays.asList(
                 AppState.WAITING, AppState.RUNNING,
                 AppState.RUNNING, AppState.COMPLETED,
@@ -65,11 +64,11 @@ class StateFlowTest {
     }
 
     @Test
-    public void testFailedFlow(){
+    public void testFailedFlow() {
         stateMachineManager.sendEvent(AppEvent.START);
-        await().until(stateMachineManager::getCurrentState , equalTo(AppState.RUNNING));
+        await().until(stateMachineManager::getCurrentState, equalTo(AppState.RUNNING));
         stateMachineManager.sendEvent(AppEvent.FAIL);
-        await().until(stateMachineManager::getCurrentState , equalTo(AppState.WAITING));
+        await().until(stateMachineManager::getCurrentState, equalTo(AppState.WAITING));
         var expectedList = Arrays.asList(
                 AppState.WAITING, AppState.RUNNING,
                 AppState.RUNNING, AppState.FAILED,

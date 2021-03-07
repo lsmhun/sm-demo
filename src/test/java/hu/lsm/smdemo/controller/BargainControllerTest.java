@@ -1,7 +1,6 @@
 package hu.lsm.smdemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.lsm.smdemo.model.AppState;
 import hu.lsm.smdemo.model.DealOffer;
 import hu.lsm.smdemo.service.AuthenticationFacade;
 import hu.lsm.smdemo.service.BargainService;
@@ -15,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,7 +33,7 @@ class BargainControllerTest {
     private MockMvc mvc;
 
     @BeforeEach
-    private void init(){
+    private void init() {
         var auth = mock(Authentication.class);
         when(auth.getName()).thenReturn("user");
         when(authenticationFacade.getAuthentication()).thenReturn(auth);
@@ -54,8 +52,7 @@ class BargainControllerTest {
     public static String asJsonString(final Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
+            return mapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

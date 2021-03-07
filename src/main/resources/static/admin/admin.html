@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <html lang="en">
 <head>
     <title>Bargain Admin</title>
@@ -20,7 +19,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="nav_title" href="../index.html">
-                <img src="../images/favicon-32x32.png" style="padding:7px;" />
+                <img src="../images/favicon-32x32.png" style="padding:7px;"/>
             </a>
         </div>
         <ul class="nav navbar-nav">
@@ -32,23 +31,27 @@
 
 <div class="container" id="app">
     <div class="row">
-        <div class="col-sm-6 bargain_left" >
+        <div class="col-sm-6 bargain_left">
             <div>
                 <button class="btn btn-success " v-on:click="manualStart">Start</button>
                 <button class="btn btn-danger " v-on:click="manualStop">Stop</button>
             </div>
-            <div class="row"><hr/></div>
+            <div class="row">
+                <hr/>
+            </div>
             <div>
                 <div>Status: {{ currentStatus }}</div>
                 <div>Message: {{ message }}</div>
             </div>
         </div>
-        <div class="col-sm-6 bargain_right" >
+        <div class="col-sm-6 bargain_right">
 
             <div>
                 <button class="btn btn-primary" v-on:click="refreshDeals">Refresh completed deals</button>
             </div>
-            <div class="row"><hr/></div>
+            <div class="row">
+                <hr/>
+            </div>
             <div id="deals">
                 <table class='table table-hover'>
                     <thead>
@@ -138,6 +141,7 @@ var app = new Vue({
         clearInterval(this.timer);
     }
 })
+
 
 </script>
 
