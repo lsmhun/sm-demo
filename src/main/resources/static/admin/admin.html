@@ -55,7 +55,7 @@
             <div id="deals">
                 <table class='table table-hover'>
                     <thead>
-                    <th class=''>Timestamp</th>
+                    <th class=''>Time</th>
                     <th class=''>ID</th>
                     <th class=''>User</th>
                     <th class=''>Price</th>
@@ -63,7 +63,9 @@
 
                     <tbody>
                     <tr v-for='deal in deals'>
-                        <td class=''>{{ deal.timestamp }}</td>
+                        <td class=''>{{ (x => {
+                            return x.getHours() + ":" + String(x.getMinutes()).padStart(2, '0') + ":" + String(x.getSeconds()).padStart(2, '0')
+                            })(new Date(deal.timestamp)) }}</td>
                         <td class=''>{{ deal.id }}</td>
                         <td class=''>{{ deal.user }}</td>
                         <td class=''>{{ deal.price }}</td>
