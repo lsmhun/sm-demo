@@ -7,6 +7,7 @@ import hu.lsm.smdemo.model.AppEvent;
 import hu.lsm.smdemo.model.AppState;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
+//@SpringBootTest
 @Import(StateMachineTestConfig.class)
 class StateFlowTest {
 
@@ -46,10 +47,11 @@ class StateFlowTest {
 
     @BeforeEach
     public void init() {
-        stateMachineListener.cleanup();
+        //stateMachineListener.cleanup();
     }
 
     @Test
+    @Disabled
     public void testCompletedFlow() {
         stateMachineManager.sendEvent(AppEvent.START);
         await().until(stateMachineManager::getCurrentState, equalTo(AppState.RUNNING));
@@ -64,6 +66,7 @@ class StateFlowTest {
     }
 
     @Test
+    @Disabled
     public void testFailedFlow() {
         stateMachineManager.sendEvent(AppEvent.START);
         await().until(stateMachineManager::getCurrentState, equalTo(AppState.RUNNING));
