@@ -20,7 +20,7 @@ class SchedulingServiceTest {
     private SchedulingService schedulingService = new SchedulingService(stateMachineManager, bargainService, dealDao);
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         when(stateMachineManager.getCurrentState()).thenReturn(AppState.WAITING);
     }
 

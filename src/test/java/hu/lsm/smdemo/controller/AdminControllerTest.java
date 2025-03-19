@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -25,11 +25,11 @@ class AdminControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @MockBean
+    @MockitoBean
     private DealDao dealDao;
 
     @BeforeEach
-    private void init() {
+    void init() {
         var res = Collections.singletonList(
                 Deal.builder()
                         .id(UUID.fromString("696b06b1-3989-478f-b47e-fdc9a5b2af69"))

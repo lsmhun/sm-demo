@@ -2,13 +2,13 @@ package hu.lsm.smdemo.service;
 
 import hu.lsm.smdemo.model.AppEvent;
 import hu.lsm.smdemo.model.AppState;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor

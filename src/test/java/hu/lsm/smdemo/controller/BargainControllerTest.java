@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.mock;
@@ -23,17 +23,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 class BargainControllerTest {
 
-    @MockBean
+    @MockitoBean
     private BargainService bargainService;
 
-    @MockBean
+    @MockitoBean
     private AuthenticationFacade authenticationFacade;
 
     @Autowired
     private MockMvc mvc;
 
     @BeforeEach
-    private void init() {
+    void init() {
         var auth = mock(Authentication.class);
         when(auth.getName()).thenReturn("user");
         when(authenticationFacade.getAuthentication()).thenReturn(auth);

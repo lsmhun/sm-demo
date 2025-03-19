@@ -10,10 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.statemachine.state.State;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -29,9 +28,9 @@ import static org.mockito.Mockito.verify;
 @Import(StateMachineTestConfig.class)
 class StateFlowTest {
 
-    @MockBean
+    @MockitoBean
     private ProcessFailedAction processFailedAction;
-    @MockBean
+    @MockitoBean
     private ProcessCompletedAction processCompletedAction;
 
     @Autowired
